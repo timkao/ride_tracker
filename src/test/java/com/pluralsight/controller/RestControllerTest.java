@@ -14,6 +14,18 @@ import org.junit.Test;
 public class RestControllerTest {
 
 	@Test(timeout=3000)
+	public void testCreateRide() {
+		RestTemplate restTemplate = new RestTemplate();  // restful route
+		
+		Ride ride = new Ride();
+		ride.setName("Tim Kao");
+		ride.setDuration(35);
+		
+		restTemplate.put("http://localhost:8080/ride_tracker/ride", ride);
+	}
+	
+	
+	@Test(timeout=4000)
 	public void testGetRides() {
 		RestTemplate restTemplate = new RestTemplate();
 
