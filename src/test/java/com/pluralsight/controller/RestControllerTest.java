@@ -13,19 +13,20 @@ import org.junit.Test;
 
 public class RestControllerTest {
 
-	@Test(timeout=5000)
+	@Test(timeout=7000)
 	public void testCreateRide() {
 		RestTemplate restTemplate = new RestTemplate();  // restful route
 		
 		Ride ride = new Ride();
-		ride.setName("Tim Kao");
-		ride.setDuration(35);
+		ride.setName("Simple Jdbc");
+		ride.setDuration(10);
 		
-		restTemplate.put("http://localhost:8080/ride_tracker/ride", ride);
+		ride = restTemplate.postForObject("http://localhost:8080/ride_tracker/ride", ride, Ride.class); // 用 postForObject 返回物件，用 put 不行
+		System.out.println("ride " + ride);
 	}
 	
 	
-	@Test(timeout=4000)
+	@Test(timeout=6000)
 	public void testGetRides() {
 		RestTemplate restTemplate = new RestTemplate();
 
