@@ -13,7 +13,7 @@ import org.junit.Test;
 
 public class RestControllerTest {
 
-	@Test(timeout=3000)
+	@Test(timeout=5000)
 	public void testCreateRide() {
 		RestTemplate restTemplate = new RestTemplate();  // restful route
 		
