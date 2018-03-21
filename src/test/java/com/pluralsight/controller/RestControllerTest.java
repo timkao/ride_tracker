@@ -18,7 +18,7 @@ public class RestControllerTest {
 		RestTemplate restTemplate = new RestTemplate();  // restful route
 		
 		Ride ride = new Ride();
-		ride.setName("Simple Jdbc");
+		ride.setName("Simple Jdbc2");
 		ride.setDuration(10);
 		
 		ride = restTemplate.postForObject("http://localhost:8080/ride_tracker/ride", ride, Ride.class); // 用 postForObject 返回物件，用 put 不行
@@ -40,5 +40,41 @@ public class RestControllerTest {
 			System.out.println("Ride name: " + ride.getName());
 		}
 	}
+	
+	@Test(timeout=8000)
+	public void testGetRide() {
+		RestTemplate restTemplate = new RestTemplate();
+		
+		Ride ride = restTemplate.getForObject("http://localhost:8080/ride_tracker/ride/1", Ride.class);
+		System.out.println("Ride name: " + ride.getName());
+	}
+	
+	@Test(timeout=8000)
+	public void testUpdateRide() {
+		RestTemplate restTemplate = new RestTemplate();
+		
+		Ride ride = restTemplate.getForObject("http://localhost:8080/ride_tracker/ride/1", Ride.class);
+		
+		ride.setDuration(ride.getDuration() + 1);
+		
+		restTemplate.put("http://localhost:8080/ride_tracker/ride", ride);
+		
+		System.out.println("Ride name: " + ride.getName());
+	}
+	
+	@Test(timeout=8000)
+	public void testBatchUpdate() {
+		RestTemplate restTemplate = new RestTemplate();
+		
+		restTemplate.getForObject("http://localhost:8080/ride_tracker/batch", Object.class);
+	}
+	
+	@Test(timeout=8000)
+	public void testDelete() {
+		RestTemplate restTemplate = new RestTemplate();
+		
+		restTemplate.delete("http://localhost:8080/ride_tracker/delete/4");
+	}
+	
 }
  
