@@ -2,14 +2,14 @@ package com.pluralsight.controller;
 
 import java.util.List;
 
+import org.junit.Test;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import com.pluralsight.model.Ride;
-
-import org.junit.Test;
+import com.pluralsight.util.ServiceError;
 
 public class RestControllerTest {
 
@@ -18,7 +18,7 @@ public class RestControllerTest {
 		RestTemplate restTemplate = new RestTemplate();  // restful route
 		
 		Ride ride = new Ride();
-		ride.setName("Simple Jdbc2");
+		ride.setName("Transactional Ride");
 		ride.setDuration(10);
 		
 		ride = restTemplate.postForObject("http://localhost:8080/ride_tracker/ride", ride, Ride.class); // 用 postForObject 返回物件，用 put 不行
@@ -74,6 +74,13 @@ public class RestControllerTest {
 		RestTemplate restTemplate = new RestTemplate();
 		
 		restTemplate.delete("http://localhost:8080/ride_tracker/delete/4");
+	}
+	
+	@Test(timeout=8000)
+	public void test() {
+		RestTemplate restTemplate = new RestTemplate();
+		ServiceError err = restTemplate.getForObject("http://localhost:8080/ride_tracker/test", ServiceError.class);
+		System.out.println(err);
 	}
 	
 }
